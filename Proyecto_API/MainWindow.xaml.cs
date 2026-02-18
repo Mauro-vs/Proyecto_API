@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proyecto_API.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,30 @@ namespace Proyecto_API
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ButtonPilotos_Click(object sender, RoutedEventArgs e)
+        {
+            ViewPilotos windowPilotos = new ViewPilotos();
+            this.Content = windowPilotos;
+        }
+
+        private void ButtonEquipos_Click(object sender, RoutedEventArgs e)
+        {
+            ViewEquipos windowEquipos = new ViewEquipos();
+            this.Content = windowEquipos;
+        }
+
+        private void ButtonCircuitos_Click(object sender, RoutedEventArgs e)
+        {
+            ViewCircuitos windowCircuitos = new ViewCircuitos();
+            this.Content = windowCircuitos;
+        }
+
+        private void ButtonCalendario_Click(object sender, RoutedEventArgs e)
+        {
+            ViewCalendario windowCarreras = new ViewCalendario();
+            this.Content = windowCarreras;
         }
     }
 }

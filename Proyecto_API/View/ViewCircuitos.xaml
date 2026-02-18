@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="Proyecto_API.View.ViewCircuitos"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Proyecto_API.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1200"
+             Background="#121212" Foreground="White">
+    
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="AccentRed" Color="#D50000"/>
+        <SolidColorBrush x:Key="DarkCard" Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="LighterCard" Color="#252525"/>
+
+        <Style x:Key="TechCircuitStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Height" Value="90"/>
+            <Setter Property="Background" Value="{StaticResource DarkCard}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource LighterCard}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource AccentRed}"/>
+                    <Setter Property="BorderThickness" Value="3,0,0,0"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#252525"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="bg" Fill="{TemplateBinding Background}" Width="36" Height="36"/>
+                            <TextBlock Text="⬅" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       FontSize="16" Foreground="{TemplateBinding Foreground}" Margin="0,-2,0,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Fill" Value="{StaticResource AccentRed}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="40,30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Style="{StaticResource BackButtonStyle}" Click="BtnVolver_Click"/>
+            <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="CIRCUITOS OFICIALES" FontFamily="Segoe UI" FontWeight="Light" FontSize="14" Foreground="#888"/>
+                <TextBlock Text="TRACK DATA" FontFamily="Segoe UI Black" FontSize="32" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,0,15,0">
+
+                <Border Style="{StaticResource TechCircuitStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#101010" CornerRadius="6,0,0,6">
+                            <TextBlock Text="QAT" FontFamily="Segoe UI Black" FontSize="20" Foreground="#444" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0">
+                            <TextBlock Text="LUSAIL INTERNATIONAL CIRCUIT" FontFamily="Segoe UI Black" FontSize="20" Foreground="White"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                <TextBlock Text="DOHA, QATAR" Foreground="#AAA" FontSize="12" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+
+                            <Border Background="#2A2A2A" CornerRadius="4" Padding="10,5" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="LONGITUD" Foreground="#666" FontSize="9" FontWeight="Bold"/>
+                                    <TextBlock Text="5.38 km" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#2A2A2A" CornerRadius="4" Padding="10,5" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="CURVAS" Foreground="#666" FontSize="9" FontWeight="Bold"/>
+                                    <TextBlock Text="16" Foreground="{StaticResource AccentRed}" FontSize="14" FontWeight="Black"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource TechCircuitStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#101010" CornerRadius="6,0,0,6">
+                            <TextBlock Text="POR" FontFamily="Segoe UI Black" FontSize="20" Foreground="#444" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0">
+                            <TextBlock Text="AUTÓDROMO DO ALGARVE" FontFamily="Segoe UI Black" FontSize="20" Foreground="White"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                <TextBlock Text="PORTIMÃO, PORTUGAL" Foreground="#AAA" FontSize="12" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                            <Border Background="#2A2A2A" CornerRadius="4" Padding="10,5" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="LONGITUD" Foreground="#666" FontSize="9" FontWeight="Bold"/>
+                                    <TextBlock Text="4.59 km" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#2A2A2A" CornerRadius="4" Padding="10,5" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="CURVAS" Foreground="#666" FontSize="9" FontWeight="Bold"/>
+                                    <TextBlock Text="15" Foreground="{StaticResource AccentRed}" FontSize="14" FontWeight="Black"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource TechCircuitStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#101010" CornerRadius="6,0,0,6">
+                            <TextBlock Text="ESP" FontFamily="Segoe UI Black" FontSize="20" Foreground="#444" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0">
+                            <TextBlock Text="CIRCUITO DE JEREZ" FontFamily="Segoe UI Black" FontSize="20" Foreground="White"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                <TextBlock Text="JEREZ, ESPAÑA" Foreground="#AAA" FontSize="12" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                            <Border Background="#2A2A2A" CornerRadius="4" Padding="10,5" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="LONGITUD" Foreground="#666" FontSize="9" FontWeight="Bold"/>
+                                    <TextBlock Text="4.42 km" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#2A2A2A" CornerRadius="4" Padding="10,5" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="CURVAS" Foreground="#666" FontSize="9" FontWeight="Bold"/>
+                                    <TextBlock Text="13" Foreground="{StaticResource AccentRed}" FontSize="14" FontWeight="Black"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
