@@ -103,7 +103,7 @@ Proyecto_API/
 
 4. **Ejecuta la aplicación** con `F5` o el botón ▶️ de Visual Studio.
 
-> **⚠️ Nota:** La API Key de Sportradar se encuentra en `Config/ApiConfig.cs`. La clave incluida es de tipo *trial* y puede tener límites de uso.
+> **⚠️ Nota:** Necesitas una API Key propia de Sportradar (plan *trial* gratuito disponible en [developer.sportradar.com](https://developer.sportradar.com/)). Una vez obtenida, reemplaza el valor de `ApiKey` en `Config/ApiConfig.cs`. **No compartas ni subas tu clave al repositorio.**
 
 ---
 
