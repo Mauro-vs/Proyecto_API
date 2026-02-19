@@ -11,48 +11,45 @@ namespace Proyecto_API.Services
 {
     public class pilotoServices
     {
-        private static readonly HttpClient _client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
-        // Guardamos los perfiles ya descargados para no repetir llamadas
-        private static Dictionary<string, pilotosModels> _cachePilotos = new Dictionary<string, pilotosModels>();
+        // Cache q almacena los perfiles
+        private static Dictionary<string, pilotosModels> _cache = new Dictionary<string, pilotosModels>();
 
         public pilotoServices()
         {
+            // si ya tiene la cabecera, no la añade (evita duplicados)
             if (!_client.DefaultRequestHeaders.Contains("x-api-key"))
             {
                 _client.DefaultRequestHeaders.Add("x-api-key", ApiConfig.ApiKey);
                 _client.DefaultRequestHeaders.Add("accept", "application/json");
-                _client.DefaultRequestHeaders.Add("User-Agent", "MotoGP_App");
             }
         }
 
         public async Task<pilotosModels> GetSeasonCompetitorsAsync(string idPiloto)
         {
-            // Lógica de Caché: Si ya existe en el diccionario, lo devolvemos directamente
-            if (_cachePilotos.ContainsKey(idPiloto))
-            {
-                return _cachePilotos[idPiloto];
-            }
+            // si hay cache devuelve el perfil sin hacer la petición HTTP
+            if (_cache.ContainsKey(idPiloto)) return _cache[idPiloto];
 
             try
             {
                 string url = $"{ApiConfig.BaseUrl}/competitors/{idPiloto}/profile.json";
                 HttpResponseMessage response = await _client.GetAsync(url);
 
-                if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode) // Manejo HTTP
                 {
                     string json = await response.Content.ReadAsStringAsync();
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                     var piloto = JsonSerializer.Deserialize<pilotosModels>(json, options);
 
-                    // Guardamos en la caché antes de devolverlo
-                    if (piloto != null) _cachePilotos[idPiloto] = piloto;
+                    // Guardar en caché antes de devolver
+                    if (piloto != null) _cache[idPiloto] = piloto;
 
                     return piloto;
                 }
-                return null;
             }
-            catch { return null; }
+            catch { }
+            return null;
         }
 
         public async Task<List<pilotosInfo>> GetAllSeasonPilotosAsync()
