@@ -103,93 +103,54 @@
                 <TextBlock Text="PARRILLA 2026" FontFamily="Segoe UI Black" FontSize="28" Foreground="White"/>
                 <Rectangle Width="40" Height="4" Fill="{StaticResource AccentRed}" HorizontalAlignment="Left" Margin="0,5,0,0"/>
             </StackPanel>
-
-            <Border Grid.Column="2" Background="#202020" CornerRadius="20" Width="280" Height="40" BorderBrush="#333" BorderThickness="1">
-                <Grid Margin="15,0">
-                    <TextBlock Text="🔍  Buscar..." VerticalAlignment="Center" Foreground="#555" IsHitTestVisible="False"/>
-                    <TextBox Background="Transparent" BorderThickness="0" Foreground="White" VerticalAlignment="Center" FontSize="14" CaretBrush="Red"/>
-                </Grid>
-            </Border>
         </Grid>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+    
+    <ItemsControl x:Name="ListaPilotosControl">
+        
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
 
-                <Border Style="{StaticResource NoPhotoCardStyle}">
-                    <Grid ClipToBounds="True">
-                        <TextBlock Text="MAR" 
-                                   FontFamily="Segoe UI Black" 
-                                   FontSize="150" 
-                                   Foreground="#333333" 
-                                   Opacity="0.3"
-                                   HorizontalAlignment="Right" 
-                                   VerticalAlignment="Bottom" 
-                                   Margin="0,0,-20,-40"
-                                   IsHitTestVisible="False"/>
+        <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource NoPhotoCardStyle}">
+                            <Grid ClipToBounds="True">
+                                <TextBlock Text="{Binding Competitor.Abbreviation}" 
+                       FontFamily="Segoe UI Black" 
+                       FontSize="150" 
+                       Foreground="#333333" 
+                       Opacity="0.3"
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Bottom" 
+                       Margin="0,0,-20,-40"
+                       IsHitTestVisible="False"/>
 
-                        <Rectangle Width="6" HorizontalAlignment="Left" Fill="#D50000" RadiusX="2" RadiusY="2" Margin="0,10"/>
+                                <Rectangle Width="6" HorizontalAlignment="Left" Fill="{Binding TeamColor}" RadiusX="2" RadiusY="2" Margin="0,10"/>
 
-                        <StackPanel Margin="25,20,10,20" VerticalAlignment="Center">
+                                <StackPanel Margin="25,20,10,20" VerticalAlignment="Center">
 
-                            <Border Background="#333" HorizontalAlignment="Left" CornerRadius="4" Padding="6,2" Margin="0,0,0,10">
-                                <TextBlock Text="ESP" Foreground="#AAA" FontSize="10" FontWeight="Bold"/>
-                            </Border>
+                                    <Border Background="#333" HorizontalAlignment="Left" CornerRadius="4" Padding="6,2" Margin="0,0,0,10">
+                                        <TextBlock Text="{Binding Competitor.CountryCode}" Foreground="#AAA" FontSize="10" FontWeight="Bold"/>
+                                    </Border>
 
-                            <TextBlock Text="Marc" Foreground="#CCC" FontSize="14"/>
-                            <TextBlock Text="MARQUEZ" Foreground="White" FontFamily="Segoe UI Black" FontSize="28" LineHeight="28"/>
+                                    <TextBlock Text="{Binding Competitor.FirstName}" Foreground="#CCC" FontSize="14"/>
+                                    <TextBlock Text="{Binding Competitor.LastName}" Foreground="White" FontFamily="Segoe UI Black" FontSize="26" LineHeight="26"/>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                                <Ellipse Width="8" Height="8" Fill="#D50000" Margin="0,0,8,0"/>
-                                <TextBlock Text="Ducati Lenovo Team" Foreground="#888" FontSize="11" FontStyle="Italic"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-
-                <Border Style="{StaticResource NoPhotoCardStyle}">
-                    <Grid ClipToBounds="True">
-                        <TextBlock Text="BAG" FontFamily="Segoe UI Black" FontSize="150" Foreground="#333333" Opacity="0.3"
-                                   HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-20,-40"/>
-
-                        <Rectangle Width="6" HorizontalAlignment="Left" Fill="#D50000" RadiusX="2" RadiusY="2" Margin="0,10"/>
-
-                        <StackPanel Margin="25,20,10,20" VerticalAlignment="Center">
-                            <Border Background="#333" HorizontalAlignment="Left" CornerRadius="4" Padding="6,2" Margin="0,0,0,10">
-                                <TextBlock Text="ITA" Foreground="#AAA" FontSize="10" FontWeight="Bold"/>
-                            </Border>
-                            <TextBlock Text="Pecco" Foreground="#CCC" FontSize="14"/>
-                            <TextBlock Text="BAGNAIA" Foreground="White" FontFamily="Segoe UI Black" FontSize="28" LineHeight="28"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                                <Ellipse Width="8" Height="8" Fill="#D50000" Margin="0,0,8,0"/>
-                                <TextBlock Text="Ducati Lenovo Team" Foreground="#888" FontSize="11" FontStyle="Italic"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <Border Style="{StaticResource NoPhotoCardStyle}">
-                    <Grid ClipToBounds="True">
-                        <TextBlock Text="QUA" FontFamily="Segoe UI Black" FontSize="150" Foreground="#333333" Opacity="0.3"
-                                   HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-20,-40"/>
-
-                        <Rectangle Width="6" HorizontalAlignment="Left" Fill="#0055AA" RadiusX="2" RadiusY="2" Margin="0,10"/>
-
-                        <StackPanel Margin="25,20,10,20" VerticalAlignment="Center">
-                            <Border Background="#333" HorizontalAlignment="Left" CornerRadius="4" Padding="6,2" Margin="0,0,0,10">
-                                <TextBlock Text="FRA" Foreground="#AAA" FontSize="10" FontWeight="Bold"/>
-                            </Border>
-                            <TextBlock Text="Fabio" Foreground="#CCC" FontSize="14"/>
-                            <TextBlock Text="QUARTARARO" Foreground="White" FontFamily="Segoe UI Black" FontSize="24" LineHeight="24"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                                <Ellipse Width="8" Height="8" Fill="#0055AA" Margin="0,0,8,0"/>
-                                <TextBlock Text="Monster Energy Yamaha" Foreground="#888" FontSize="11" FontStyle="Italic"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-            </WrapPanel>
-        </ScrollViewer>
+                                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                                        <Ellipse Width="8" Height="8" Fill="{Binding TeamColor}" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding TeamName}" Foreground="#888" FontSize="11" FontStyle="Italic"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+        
+    </ItemsControl>
+</ScrollViewer>
     </Grid>
 </UserControl>
