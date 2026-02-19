@@ -1,6 +1,6 @@
 ﻿using Proyecto_API.Models;
 using Proyecto_API.Services;
-using System.Collections.Generic;
+using System.Collections.ObjectModel; // Necesario para la actualización automática
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,45 +11,52 @@ namespace Proyecto_API.View
     public partial class ViewPilotos : UserControl
     {
         private pilotoServices _servicioPilotos;
-        // Cambio: La lista debe ser de pilotosModels (el DTO principal)
-        private List<pilotosModels> _listaPilotos;
+        private ObservableCollection<pilotosModels> _listaPilotos;
 
         public ViewPilotos()
         {
             InitializeComponent();
             _servicioPilotos = new pilotoServices();
-            _listaPilotos = new List<pilotosModels>();
+            _listaPilotos = new ObservableCollection<pilotosModels>();
+            ListaPilotosControl.ItemsSource = _listaPilotos;
+
             CargarPilotos();
         }
 
         private async void CargarPilotos()
         {
-            // 1. Obtenemos los IDs (Hilo principal, pero asíncrono)
+            // Obtiene la lista base (los IDs)
             var listaBase = await _servicioPilotos.GetAllSeasonPilotosAsync();
 
             if (listaBase != null)
             {
+                // Para evitar bloqueos de la API gratuita, vamos a cargar una cantidad razonable
                 var listaReducida = listaBase.Take(10).ToList();
+
                 _listaPilotos.Clear();
 
-                // 2. Ejecutamos la carga en un hilo separado (Punto: Separació de fils)
-                await Task.Run(async () => {
+                // Gestion de hilos
+                await Task.Run(async () =>
+                {
                     foreach (var pInfo in listaReducida)
                     {
-                        // Descargamos el dato
+                        // Pedimos el perfil detallado
                         var perfil = await _servicioPilotos.GetSeasonCompetitorsAsync(pInfo.Id);
 
                         if (perfil != null)
                         {
-                            // 3. Para modificar la lista que ve el usuario, volvemos al hilo de la UI
-                            App.Current.Dispatcher.Invoke(() => {
+                            // Volvemos al hilo de la UI para añadir el piloto
+                            App.Current.Dispatcher.Invoke(() =>
+                            {
                                 _listaPilotos.Add(perfil);
-                                ListaPilotosControl.ItemsSource = null;
-                                ListaPilotosControl.ItemsSource = _listaPilotos;
                             });
                         }
                     }
                 });
+            }
+            else
+            {
+                MessageBox.Show("No se pudo obtener la lista de pilotos.");
             }
         }
 

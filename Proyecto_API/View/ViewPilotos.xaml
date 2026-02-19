@@ -32,9 +32,8 @@
             </Setter>
         </Style>
 
-        <Style x:Key="NoPhotoCardStyle" TargetType="Border">
+        <Style x:Key="PilotCardStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="15"/>
             <Setter Property="Width" Value="280"/>
             <Setter Property="Height" Value="180"/>
@@ -46,41 +45,6 @@
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="15" ShadowDepth="5" Opacity="0.3" Color="Black"/>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <ScaleTransform ScaleX="1" ScaleY="1"/>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="{StaticResource AccentRed}"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Trigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.2"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.2"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </Trigger.EnterActions>
-                    <Trigger.ExitActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.15"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.15"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </Trigger.ExitActions>
-                </Trigger>
-            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
@@ -94,45 +58,33 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Style="{StaticResource BackButtonStyle}" Click="BtnVolver_Click"/>
 
             <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center">
-                <TextBlock Text="PARRILLA 2026" FontFamily="Segoe UI Black" FontSize="28" Foreground="White"/>
+                <TextBlock Text="PILOTOS 2026" FontFamily="Segoe UI Black" FontSize="28" Foreground="White"/>
                 <Rectangle Width="40" Height="4" Fill="{StaticResource AccentRed}" HorizontalAlignment="Left" Margin="0,5,0,0"/>
             </StackPanel>
         </Grid>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-    
-    <ItemsControl x:Name="ListaPilotosControl">
-        
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="ListaPilotosControl">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-        <ItemsControl.ItemTemplate>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource NoPhotoCardStyle}">
-                            <Grid ClipToBounds="True">
-                                <TextBlock Text="{Binding Competitor.Abbreviation}" 
-                       FontFamily="Segoe UI Black" 
-                       FontSize="150" 
-                       Foreground="#333333" 
-                       Opacity="0.3"
-                       HorizontalAlignment="Right" 
-                       VerticalAlignment="Bottom" 
-                       Margin="0,0,-20,-40"
-                       IsHitTestVisible="False"/>
+                        <Border Style="{StaticResource PilotCardStyle}">
+                            <Grid>
+                                <TextBlock Text="{Binding Competitor.Abbreviation}" FontFamily="Segoe UI Black" FontSize="100" Foreground="#333" Opacity="0.2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-10,-20" IsHitTestVisible="False"/>
 
                                 <Rectangle Width="6" HorizontalAlignment="Left" Fill="{Binding TeamColor}" RadiusX="2" RadiusY="2" Margin="0,10"/>
 
                                 <StackPanel Margin="25,20,10,20" VerticalAlignment="Center">
-
                                     <Border Background="#333" HorizontalAlignment="Left" CornerRadius="4" Padding="6,2" Margin="0,0,0,10">
                                         <TextBlock Text="{Binding Competitor.CountryCode}" Foreground="#AAA" FontSize="10" FontWeight="Bold"/>
                                     </Border>
@@ -149,8 +101,7 @@
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-        
-    </ItemsControl>
-</ScrollViewer>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
