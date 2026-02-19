@@ -1,0 +1,140 @@
+<div align="center">
+
+<img src="Proyecto_API/assets/motogp_logo.png" alt="MotoGP Logo" width="300"/>
+
+# 🏍️ MotoGP Dashboard
+
+**Aplicación de escritorio para consultar estadísticas oficiales de MotoGP en tiempo real**
+
+[![.NET](https://img.shields.io/badge/.NET-WPF-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
+[![Sportradar API](https://img.shields.io/badge/Sportradar-API-D50000?style=for-the-badge)](https://developer.sportradar.com/)
+
+</div>
+
+---
+
+## 📋 Descripción
+
+**MotoGP Dashboard** es una aplicación de escritorio desarrollada con **WPF (Windows Presentation Foundation)** y **C#** que consume la API oficial de **Sportradar** para mostrar información actualizada sobre la temporada de MotoGP.
+
+La aplicación muestra tarjetas dinámicas de pilotos y equipos con **colores por equipo**, **carga asíncrona** para no bloquear la UI y un diseño oscuro inspirado en la estética de MotoGP.
+
+---
+
+## ✨ Características
+
+- 🏍️ **Vista de Pilotos** — Tarjetas de los 10 primeros pilotos de la temporada con nombre, país, abreviatura y equipo
+- 🏁 **Vista de Equipos** — Tarjetas de los equipos con sus pilotos y colores distintivos por marca
+- 🎨 **Colores dinámicos por equipo** — Ducati 🔴, Yamaha 🔵, KTM/GasGas 🟠, Aprilia/Pramac 🟣, Honda 🟡, VR46 🟡
+- ⚡ **Carga asíncrona** — Uso de `async/await` y `Task` para no bloquear la interfaz de usuario
+- 💾 **Caché de respuestas** — Evita llamadas repetidas a la API para datos ya descargados
+- 🛡️ **Manejo de errores HTTP** — Gestión de errores 404, 403, 5xx y fallos de red
+- 🖥️ **Diseño oscuro** — Tema `#121212` inspirado en el look oficial de MotoGP
+
+---
+
+## 🏗️ Arquitectura
+
+El proyecto sigue el patrón **MVC (Model-View-Controller)**:
+
+```
+Proyecto_API/
+├── 📁 Config/
+│   └── ApiConfig.cs          # Centraliza la API Key, URL base y Season ID
+│
+├── 📁 Models/
+│   ├── pilotosModels.cs       # Modelos de datos para pilotos
+│   └── equiposModels.cs       # Modelos de datos para equipos
+│
+├── 📁 Services/
+│   ├── pilotoServices.cs      # Llamadas HTTP a la API de pilotos
+│   └── equipoServices.cs      # Llamadas HTTP a la API de equipos
+│
+├── 📁 Controllers/
+│   ├── MainController.cs      # Gestión de navegación entre vistas
+│   ├── PilotosController.cs   # Lógica de negocio de pilotos
+│   └── EquiposController.cs   # Lógica de negocio de equipos
+│
+└── 📁 View/
+    ├── MainWindow.xaml        # Pantalla principal (menú)
+    ├── ViewPilotos.xaml       # Vista de pilotos
+    └── ViewEquipos.xaml       # Vista de equipos
+```
+
+---
+
+## 🛠️ Tecnologías
+
+| Tecnología | Uso |
+|---|---|
+| **C# / .NET** | Lenguaje y framework principal |
+| **WPF** | Interfaz gráfica de escritorio |
+| **HttpClient** | Consumo de la API REST |
+| **System.Text.Json** | Deserialización de respuestas JSON |
+| **async / await** | Programación asíncrona sin bloqueo |
+| **Sportradar MotoGP API v2** | Fuente de datos oficial |
+
+---
+
+## 📦 Requisitos previos
+
+- **Windows 10/11**
+- **Visual Studio 2022** (o superior) con soporte para WPF
+- **.NET Framework** (configurado en el proyecto)
+- Conexión a internet para consumir la API
+
+---
+
+## 🚀 Instalación y uso
+
+1. **Clona el repositorio:**
+   ```bash
+   git clone https://github.com/Mauro-vs/Proyecto_API.git
+   cd Proyecto_API
+   ```
+
+2. **Abre la solución en Visual Studio:**
+   ```
+   Proyecto_API.sln
+   ```
+
+3. **Restaura los paquetes NuGet** (Visual Studio lo hace automáticamente al compilar).
+
+4. **Ejecuta la aplicación** con `F5` o el botón ▶️ de Visual Studio.
+
+> **⚠️ Nota:** Necesitas una API Key propia de Sportradar (plan *trial* gratuito disponible en [developer.sportradar.com](https://developer.sportradar.com/)). Una vez obtenida, reemplaza el valor de `ApiKey` en `Config/ApiConfig.cs`. **No compartas ni subas tu clave al repositorio.**
+
+---
+
+## 🌐 API utilizada
+
+La aplicación consume la **[Sportradar MotoGP API v2](https://developer.sportradar.com/)**:
+
+| Endpoint | Descripción |
+|---|---|
+| `/seasons/{id}/competitors.json` | Lista de pilotos de la temporada |
+| `/competitors/{id}/profile.json` | Perfil detallado de un piloto |
+| `/teams/{id}/profile.json` | Perfil detallado de un equipo |
+
+---
+
+## 📸 Capturas de pantalla
+
+| Menú Principal | Vista de Pilotos | Vista de Equipos |
+|---|---|---|
+| Pantalla de inicio con acceso a Pilotos y Equipos | Tarjetas de pilotos con colores por equipo | Tarjetas de equipos con lista de pilotos |
+
+---
+
+## 👨‍💻 Autor
+
+Desarrollado por **Mauro-vs** como proyecto de consumo de APIs REST con WPF.
+
+---
+
+<div align="center">
+
+*¡Que empiece la carrera! 🏁*
+
+</div>

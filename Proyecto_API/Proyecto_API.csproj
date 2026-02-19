@@ -138,6 +138,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="README.md" />
     <Resource Include="assets\equipos.webp" />
     <None Include="assets\calendario.webp" />
     <Resource Include="assets\pilotos.webp" />
