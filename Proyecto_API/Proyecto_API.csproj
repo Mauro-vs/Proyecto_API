@@ -86,16 +86,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config\ApiConfig.cs" />
+    <Compile Include="Controllers\EquiposController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\PilotosController.cs" />
     <Compile Include="Models\equiposModels.cs" />
     <Compile Include="Models\pilotosModels.cs" />
     <Compile Include="Services\equipoServices.cs" />
     <Compile Include="Services\pilotoServices.cs" />
-    <Compile Include="View\ViewCalendario.xaml.cs">
-      <DependentUpon>ViewCalendario.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewCircuitos.xaml.cs">
-      <DependentUpon>ViewCircuitos.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ViewEquipos.xaml.cs">
       <DependentUpon>ViewEquipos.xaml</DependentUpon>
     </Compile>
@@ -114,14 +111,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ViewCalendario.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewCircuitos.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\ViewEquipos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

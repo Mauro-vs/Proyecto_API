@@ -1,4 +1,4 @@
-﻿using Proyecto_API.View;
+﻿using Proyecto_API.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,33 +21,22 @@ namespace Proyecto_API
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainController _controller;
+
         public MainWindow()
         {
             InitializeComponent();
+            _controller = new MainController(this);
         }
 
         private void ButtonPilotos_Click(object sender, RoutedEventArgs e)
         {
-            ViewPilotos windowPilotos = new ViewPilotos();
-            this.Content = windowPilotos;
+            _controller.NavegarAPilotos();
         }
 
         private void ButtonEquipos_Click(object sender, RoutedEventArgs e)
         {
-            ViewEquipos windowEquipos = new ViewEquipos();
-            this.Content = windowEquipos;
-        }
-
-        private void ButtonCircuitos_Click(object sender, RoutedEventArgs e)
-        {
-            ViewCircuitos windowCircuitos = new ViewCircuitos();
-            this.Content = windowCircuitos;
-        }
-
-        private void ButtonCalendario_Click(object sender, RoutedEventArgs e)
-        {
-            ViewCalendario windowCarreras = new ViewCalendario();
-            this.Content = windowCarreras;
+            _controller.NavegarAEquipos();
         }
     }
 }

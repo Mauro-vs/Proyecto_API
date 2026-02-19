@@ -78,7 +78,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource PilotCardStyle}">
+                        <Border Style="{StaticResource PilotCardStyle}" MouseLeftButtonUp="TarjetaPiloto_Click" Tag="{Binding Competitor.Id}">
                             <Grid>
                                 <TextBlock Text="{Binding Competitor.Abbreviation}" FontFamily="Segoe UI Black" FontSize="100" Foreground="#333" Opacity="0.2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-10,-20" IsHitTestVisible="False"/>
 

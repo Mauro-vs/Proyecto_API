@@ -26,9 +26,9 @@ namespace Proyecto_API.Services
             }
         }
 
+        // Este método obtiene el perfil detallado de un piloto por su ID
         public async Task<pilotosModels> GetSeasonCompetitorsAsync(string idPiloto)
         {
-            // si hay cache devuelve el perfil sin hacer la petición HTTP
             if (_cache.ContainsKey(idPiloto)) return _cache[idPiloto];
 
             try
@@ -36,22 +36,43 @@ namespace Proyecto_API.Services
                 string url = $"{ApiConfig.BaseUrl}/competitors/{idPiloto}/profile.json";
                 HttpResponseMessage response = await _client.GetAsync(url);
 
-                if (response.IsSuccessStatusCode) // Manejo HTTP
+                if (response.IsSuccessStatusCode)
                 {
                     string json = await response.Content.ReadAsStringAsync();
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                     var piloto = JsonSerializer.Deserialize<pilotosModels>(json, options);
 
-                    // Guardar en caché antes de devolver
                     if (piloto != null) _cache[idPiloto] = piloto;
 
                     return piloto;
                 }
+                else
+                {
+                    // --- MANEJO DE HTTP Y RED ---
+                    int statusCode = (int)response.StatusCode;
+
+                    if (statusCode == 404) 
+                    {
+                        MessageBox.Show($"Error 404: No se ha encontrado el piloto con ID {idPiloto}.");
+                    }
+                    else if (statusCode == 403) 
+                    {
+                        MessageBox.Show("Error 403: Permiso denegado. Revisa tu API Key.");
+                    }
+                    else if (statusCode >= 500)
+                    {
+                        MessageBox.Show($"Error {statusCode}: El servidor de la API está fallando.");
+                    }
+                }
             }
-            catch { }
+            catch (Exception)
+            {
+                MessageBox.Show("Error de conexión: Comprueba tu conexión a internet.");
+            }
             return null;
         }
 
+        // Este método obtiene la lista de pilotos de la temporada actual
         public async Task<List<pilotosInfo>> GetAllSeasonPilotosAsync()
         {
             try
@@ -67,18 +88,19 @@ namespace Proyecto_API.Services
                     return data?.SeasonCompetitors;
                 }
 
-                // Plan B de IDs si la API Trial falla (para que siempre veas algo)
                 return new List<pilotosInfo>
                 {
                     new pilotosInfo { Id = "sr:competitor:21999" },
                     new pilotosInfo { Id = "sr:competitor:21997" },
                     new pilotosInfo { Id = "sr:competitor:8003" },
                     new pilotosInfo { Id = "sr:competitor:34971" },
-                    new pilotosInfo { Id = "sr:competitor:172900" },
-                    new pilotosInfo { Id = "sr:competitor:184203" }
                 };
             }
-            catch { return null; }
+            catch 
+            { 
+                MessageBox.Show("Error de red: No se pudo contactar con la API.");
+            }
+            return null;
         }
     }
 }

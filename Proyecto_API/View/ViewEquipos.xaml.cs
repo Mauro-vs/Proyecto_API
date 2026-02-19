@@ -1,8 +1,6 @@
-﻿using Proyecto_API.Models;
-using Proyecto_API.Services;
-using System;
-using System.Collections.ObjectModel; // <--- Añadir esto
-using System.Threading.Tasks;
+﻿using Proyecto_API.Controllers;
+using Proyecto_API.Models;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,13 +8,16 @@ namespace Proyecto_API.View
 {
     public partial class ViewEquipos : UserControl
     {
-        private equipoServices _servicioEquipos;
+        private readonly EquiposController _controller;
+        private readonly MainController _mainController;
         private ObservableCollection<equiposModels> _listaEquipos;
 
-        public ViewEquipos()
+        public ViewEquipos(MainController mainController)
         {
             InitializeComponent();
-            _servicioEquipos = new equipoServices();
+            _controller = new EquiposController();
+            _mainController = mainController;
+
             _listaEquipos = new ObservableCollection<equiposModels>();
             ListaEquiposControl.ItemsSource = _listaEquipos;
 
@@ -25,34 +26,21 @@ namespace Proyecto_API.View
 
         private async void CargarEquipos()
         {
-            var listaBase = _servicioEquipos.GetEquiposManual();
-
-            // Gestion de hilos
-            await Task.Run(async () =>
+            // Llamamos al controlador asíncrono
+            await _controller.CargarEquiposAsync(equipo =>
             {
-                foreach (var eInfo in listaBase)
+                // Volvemos al hilo de la pantalla para añadir la tarjeta
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    var detalle = await _servicioEquipos.GetEquipoDetalleAsync(eInfo.Id);
-
-                    if (detalle != null)
-                    {
-                        // Volvemos al hilo de la UI para añadir a la colección
-                        App.Current.Dispatcher.Invoke(() =>
-                        {
-                            // Al ser ObservableCollection, la UI se entera sola
-                            // y añade la tarjeta al momento sin hacer nada más
-                            _listaEquipos.Add(detalle);
-                        });
-                    }
-                }
+                    _listaEquipos.Add(equipo);
+                });
             });
         }
 
         private void BtnVolver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            main.Show();
-            Window.GetWindow(this).Close();
+            // Usamos la arquitectura para volver al menú
+            _mainController.VolverAMenuPrincipal();
         }
     }
 }

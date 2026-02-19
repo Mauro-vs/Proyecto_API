@@ -1,10 +1,11 @@
-﻿using Proyecto_API.Models;
-using Proyecto_API.Config;
+﻿using Proyecto_API.Config;
+using Proyecto_API.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Proyecto_API.Services
 {
@@ -27,7 +28,6 @@ namespace Proyecto_API.Services
 
         public async Task<equiposModels> GetEquipoDetalleAsync(string idEquipo)
         {
-            // Si está en cache, lo devolvemos sin usar internet
             if (_cacheEquipos.ContainsKey(idEquipo)) return _cacheEquipos[idEquipo];
 
             try
@@ -42,11 +42,32 @@ namespace Proyecto_API.Services
                     var equipo = JsonSerializer.Deserialize<equiposModels>(json, options);
 
                     if (equipo != null) _cacheEquipos[idEquipo] = equipo;
+
                     return equipo;
                 }
-                return null;
+                else
+                {
+                    int statusCode = (int)response.StatusCode;
+
+                    if (statusCode == 404)
+                    {
+                        MessageBox.Show($"Error 404: No se ha encontrado el equipo con ID {idEquipo}.");
+                    }
+                    else if (statusCode == 403)
+                    {
+                        MessageBox.Show("Error 403: Permiso denegado. Revisa tu API Key.");
+                    }
+                    else if (statusCode >= 500)
+                    {
+                        MessageBox.Show($"Error {statusCode}: El servidor de la API está fallando.");
+                    }
+                }
             }
-            catch { return null; }
+            catch
+            {
+                MessageBox.Show("Error de red: Comprueba tu conexión a internet.");
+            }
+            return null;
         }
 
         // Plan de rescate por si el endpoint de temporada falla en Trial
