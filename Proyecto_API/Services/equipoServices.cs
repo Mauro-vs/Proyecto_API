@@ -19,18 +19,7 @@ namespace Proyecto_API.Services
     /// </remarks>
     public class equipoServices
     {
-        /// <summary>
-        /// Cliente HTTP estático reutilizable para las peticiones a la API
-        /// </summary>
         private static readonly HttpClient _client = new HttpClient();
-
-        /// <summary>
-        /// Caché estática que almacena los perfiles de equipos ya descargados
-        /// </summary>
-        /// <remarks>
-        /// La clave es el ID del equipo y el valor es su modelo completo.
-        /// Evita llamadas repetidas a la API para datos ya obtenidos.
-        /// </remarks>
         private static Dictionary<string, equiposModels> _cacheEquipos = new Dictionary<string, equiposModels>();
 
         /// <summary>

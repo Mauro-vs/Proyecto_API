@@ -19,18 +19,7 @@ namespace Proyecto_API.Services
     /// </remarks>
     public class pilotoServices
     {
-        /// <summary>
-        /// Cliente HTTP reutilizable para las peticiones a la API
-        /// </summary>
         private readonly HttpClient _client = new HttpClient();
-
-        /// <summary>
-        /// Caché estática que almacena los perfiles de pilotos ya descargados
-        /// </summary>
-        /// <remarks>
-        /// La clave es el ID del piloto y el valor es su modelo completo.
-        /// Evita llamadas repetidas a la API para datos ya obtenidos.
-        /// </remarks>
         private static Dictionary<string, pilotosModels> _cache = new Dictionary<string, pilotosModels>();
 
         /// <summary>

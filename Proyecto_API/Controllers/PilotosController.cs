@@ -62,7 +62,7 @@ namespace Proyecto_API.Controllers
                 if (listaBase == null)
                     throw new HttpRequestException("Error HTTP: No se pudo obtener la lista de pilotos.");
 
-                var listaReducida = listaBase.Take(10).ToList();
+                var listaReducida = listaBase.Take(6).ToList();
 
                 // utilizamos el task para no bloquear la interfaz mientras se cargan los detalles de cada piloto
                 await Task.Run(async () =>
