@@ -9,13 +9,37 @@ using System.Windows;
 
 namespace Proyecto_API.Services
 {
+    /// <summary>
+    /// Servicio para gestionar las peticiones HTTP relacionadas con equipos
+    /// </summary>
+    /// <remarks>
+    /// Esta clase se encarga de consumir los endpoints de la API de Sportradar
+    /// para obtener información de equipos de MotoGP. Implementa caché para
+    /// optimizar las peticiones y manejo de errores HTTP.
+    /// </remarks>
     public class equipoServices
     {
+        /// <summary>
+        /// Cliente HTTP estático reutilizable para las peticiones a la API
+        /// </summary>
         private static readonly HttpClient _client = new HttpClient();
 
-        // --- CACHE ---
+        /// <summary>
+        /// Caché estática que almacena los perfiles de equipos ya descargados
+        /// </summary>
+        /// <remarks>
+        /// La clave es el ID del equipo y el valor es su modelo completo.
+        /// Evita llamadas repetidas a la API para datos ya obtenidos.
+        /// </remarks>
         private static Dictionary<string, equiposModels> _cacheEquipos = new Dictionary<string, equiposModels>();
 
+        /// <summary>
+        /// Constructor que inicializa el cliente HTTP con las cabeceras necesarias
+        /// </summary>
+        /// <remarks>
+        /// Configura las cabeceras de autenticación (x-api-key), formato de respuesta (accept)
+        /// y User-Agent. Verifica que no existan cabeceras duplicadas antes de añadirlas.
+        /// </remarks>
         public equipoServices()
         {
             if (!_client.DefaultRequestHeaders.Contains("x-api-key"))
@@ -26,6 +50,22 @@ namespace Proyecto_API.Services
             }
         }
 
+        /// <summary>
+        /// Obtiene el perfil completo de un equipo por su ID
+        /// </summary>
+        /// <param name="idEquipo">Identificador único del equipo en formato Sportradar (ej: sr:competitor:4567)</param>
+        /// <returns>Modelo completo del equipo o null si hay error</returns>
+        /// <remarks>
+        /// Este método utiliza caché para evitar peticiones repetidas.
+        /// Consume el endpoint: /teams/{id}/profile.json
+        /// Maneja errores HTTP 404, 403, 5xx y errores de red.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// var servicio = new equipoServices();
+        /// var equipo = await servicio.GetEquipoDetalleAsync("sr:competitor:4567");
+        /// </code>
+        /// </example>
         public async Task<equiposModels> GetEquipoDetalleAsync(string idEquipo)
         {
             if (_cacheEquipos.ContainsKey(idEquipo)) return _cacheEquipos[idEquipo];
@@ -70,7 +110,20 @@ namespace Proyecto_API.Services
             return null;
         }
 
-        // Plan de rescate por si el endpoint de temporada falla en Trial
+        /// <summary>
+        /// Obtiene una lista predefinida de IDs de equipos como plan de rescate
+        /// </summary>
+        /// <returns>Lista de información básica de equipos principales</returns>
+        /// <remarks>
+        /// Este método se utiliza como plan B en caso de que el endpoint de la temporada
+        /// falle en la versión Trial de la API. Devuelve IDs de equipos conocidos.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// var servicio = new equipoServices();
+        /// var equipos = servicio.GetEquiposManual();
+        /// </code>
+        /// </example>
         public List<equipoInfo> GetEquiposManual()
         {
             return new List<equipoInfo>

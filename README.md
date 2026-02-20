@@ -9,6 +9,7 @@
 [![.NET](https://img.shields.io/badge/.NET-WPF-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
 [![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
 [![Sportradar API](https://img.shields.io/badge/Sportradar-API-D50000?style=for-the-badge)](https://developer.sportradar.com/)
+[![Doxygen](https://img.shields.io/badge/Docs-Doxygen-2C4AA8?style=for-the-badge&logo=doxygen)](https://www.doxygen.nl/)
 
 </div>
 
@@ -31,6 +32,7 @@ La aplicación muestra tarjetas dinámicas de pilotos y equipos con **colores po
 - 💾 **Caché de respuestas** — Evita llamadas repetidas a la API para datos ya descargados
 - 🛡️ **Manejo de errores HTTP** — Gestión de errores 404, 403, 5xx y fallos de red
 - 🖥️ **Diseño oscuro** — Tema `#121212` inspirado en el look oficial de MotoGP
+- 📚 **Documentación completa** — Generada con Doxygen para todo el código fuente
 
 ---
 
@@ -74,6 +76,7 @@ Proyecto_API/
 | **System.Text.Json** | Deserialización de respuestas JSON |
 | **async / await** | Programación asíncrona sin bloqueo |
 | **Sportradar MotoGP API v2** | Fuente de datos oficial |
+| **Doxygen** | Generación de documentación técnica |
 
 ---
 
@@ -81,8 +84,9 @@ Proyecto_API/
 
 - **Windows 10/11**
 - **Visual Studio 2022** (o superior) con soporte para WPF
-- **.NET Framework** (configurado en el proyecto)
+- **.NET Framework 4.8** (configurado en el proyecto)
 - Conexión a internet para consumir la API
+- **Doxygen** (opcional, solo para generar documentación)
 
 ---
 
@@ -107,6 +111,36 @@ Proyecto_API/
 
 ---
 
+## 📚 Documentación
+
+El proyecto incluye **documentación completa generada con Doxygen** para todo el código fuente.
+
+### Generar la documentación
+
+**Método 1: Script automático (PowerShell)**
+```powershell
+.\GenerarDocumentacion.ps1
+```
+
+**Método 2: Manual**
+```bash
+doxygen Doxyfile
+```
+
+La documentación se generará en `Documentation/html/index.html`
+
+📖 **[Ver guía completa de documentación](DOCUMENTACION.md)**
+
+### Contenido de la documentación
+
+✅ Descripción completa de todas las clases y métodos  
+✅ Parámetros, retornos y excepciones documentados  
+✅ Ejemplos de uso con código  
+✅ Diagramas de clases (requiere Graphviz)  
+✅ Navegación interactiva con búsqueda  
+
+---
+
 ## 🌐 API utilizada
 
 La aplicación consume la **[Sportradar MotoGP API v2](https://developer.sportradar.com/)**:
@@ -127,9 +161,51 @@ La aplicación consume la **[Sportradar MotoGP API v2](https://developer.sportra
 
 ---
 
+## 📁 Estructura del Proyecto
+
+```
+Proyecto_API/
+├── Proyecto_API/              # Código fuente de la aplicación
+│   ├── Config/                # Configuración de la API
+│   ├── Controllers/           # Controladores (lógica de negocio)
+│   ├── Models/                # Modelos de datos
+│   ├── Services/              # Servicios HTTP
+│   └── View/                  # Vistas XAML
+│
+├── Documentation/             # Documentación generada (Doxygen)
+├── Doxyfile                   # Configuración de Doxygen
+├── GenerarDocumentacion.ps1   # Script para generar docs
+├── DOCUMENTACION.md           # Guía de documentación
+└── README.md                  # Este archivo
+```
+
+---
+
+## 🤝 Contribuir
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Haz fork del proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/NuevaCaracteristica`)
+3. Documenta tu código siguiendo el estilo Doxygen existente
+4. Haz commit de tus cambios (`git commit -m 'Agregar nueva característica'`)
+5. Haz push a la rama (`git push origin feature/NuevaCaracteristica`)
+6. Abre un Pull Request
+
+---
+
+## 📄 Licencia
+
+Este proyecto es de código abierto y está disponible para uso educativo.
+
+---
+
 ## 👨‍💻 Autor
 
 Desarrollado por **Mauro-vs** como proyecto de consumo de APIs REST con WPF.
+
+- GitHub: [@Mauro-vs](https://github.com/Mauro-vs)
+- Repositorio: [Proyecto_API](https://github.com/Mauro-vs/Proyecto_API)
 
 ---
 

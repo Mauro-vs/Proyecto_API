@@ -9,8 +9,12 @@ using System.Windows;
 namespace Proyecto_API
 {
     /// <summary>
-    /// Lógica de interacción para App.xaml
+    /// Clase principal de la aplicación WPF
     /// </summary>
+    /// <remarks>
+    /// Punto de entrada de la aplicación MotoGP Dashboard.
+    /// Gestiona el ciclo de vida de la aplicación y la inicialización de recursos.
+    /// </remarks>
     public partial class App : Application
     {
     }

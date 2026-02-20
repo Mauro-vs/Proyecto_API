@@ -9,13 +9,37 @@ using System.Windows;
 
 namespace Proyecto_API.Services
 {
+    /// <summary>
+    /// Servicio para gestionar las peticiones HTTP relacionadas con pilotos
+    /// </summary>
+    /// <remarks>
+    /// Esta clase se encarga de consumir los endpoints de la API de Sportradar
+    /// para obtener información de pilotos de MotoGP. Implementa caché para
+    /// optimizar las peticiones y manejo de errores HTTP.
+    /// </remarks>
     public class pilotoServices
     {
+        /// <summary>
+        /// Cliente HTTP reutilizable para las peticiones a la API
+        /// </summary>
         private readonly HttpClient _client = new HttpClient();
 
-        // Cache q almacena los perfiles
+        /// <summary>
+        /// Caché estática que almacena los perfiles de pilotos ya descargados
+        /// </summary>
+        /// <remarks>
+        /// La clave es el ID del piloto y el valor es su modelo completo.
+        /// Evita llamadas repetidas a la API para datos ya obtenidos.
+        /// </remarks>
         private static Dictionary<string, pilotosModels> _cache = new Dictionary<string, pilotosModels>();
 
+        /// <summary>
+        /// Constructor que inicializa el cliente HTTP con las cabeceras necesarias
+        /// </summary>
+        /// <remarks>
+        /// Configura las cabeceras de autenticación (x-api-key) y formato de respuesta (accept).
+        /// Verifica que no existan cabeceras duplicadas antes de añadirlas.
+        /// </remarks>
         public pilotoServices()
         {
             // si ya tiene la cabecera, no la añade (evita duplicados)
@@ -26,7 +50,22 @@ namespace Proyecto_API.Services
             }
         }
 
-        // Este método obtiene el perfil detallado de un piloto por su ID
+        /// <summary>
+        /// Obtiene el perfil completo de un piloto por su ID
+        /// </summary>
+        /// <param name="idPiloto">Identificador único del piloto en formato Sportradar (ej: sr:competitor:21999)</param>
+        /// <returns>Modelo completo del piloto o null si hay error</returns>
+        /// <remarks>
+        /// Este método utiliza caché para evitar peticiones repetidas.
+        /// Consume el endpoint: /competitors/{id}/profile.json
+        /// Maneja errores HTTP 404, 403, 5xx y errores de red.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// var servicio = new pilotoServices();
+        /// var piloto = await servicio.GetSeasonCompetitorsAsync("sr:competitor:21999");
+        /// </code>
+        /// </example>
         public async Task<pilotosModels> GetSeasonCompetitorsAsync(string idPiloto)
         {
             if (_cache.ContainsKey(idPiloto)) return _cache[idPiloto];
@@ -72,7 +111,20 @@ namespace Proyecto_API.Services
             return null;
         }
 
-        // Este método obtiene la lista de pilotos de la temporada actual
+        /// <summary>
+        /// Obtiene la lista de todos los pilotos de la temporada actual
+        /// </summary>
+        /// <returns>Lista de información básica de pilotos o null si hay error</returns>
+        /// <remarks>
+        /// Consume el endpoint: /seasons/{SeasonId}/competitors.json
+        /// En caso de error, devuelve una lista de pilotos predefinidos como plan de rescate.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// var servicio = new pilotoServices();
+        /// var pilotos = await servicio.GetAllSeasonPilotosAsync();
+        /// </code>
+        /// </example>
         public async Task<List<pilotosInfo>> GetAllSeasonPilotosAsync()
         {
             try
@@ -88,6 +140,7 @@ namespace Proyecto_API.Services
                     return data?.SeasonCompetitors;
                 }
 
+                // Plan de rescate con pilotos predefinidos
                 return new List<pilotosInfo>
                 {
                     new pilotosInfo { Id = "sr:competitor:21999" },
