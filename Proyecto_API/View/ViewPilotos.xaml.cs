@@ -50,6 +50,7 @@ namespace Proyecto_API.View
             InitializeComponent();
             _controller = new PilotosController();
             _mainController = mainController;
+
             _listaPilotos = new ObservableCollection<pilotosModels>();
             ListaPilotosControl.ItemsSource = _listaPilotos;
 

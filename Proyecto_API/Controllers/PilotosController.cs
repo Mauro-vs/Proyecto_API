@@ -75,8 +75,6 @@ namespace Proyecto_API.Controllers
                         {
                             onPilotoCargado(perfil);
                         }
-
-                        await Task.Delay(200);
                     }
                 });
             }
